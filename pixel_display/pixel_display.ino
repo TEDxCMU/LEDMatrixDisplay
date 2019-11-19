@@ -251,6 +251,10 @@ void setup() {
 }
 
 void loop() {
+  showColor(255, 0, 0);
+  delay(2000);
+  showColor(0, 0, 0);
+  delay(2000);
 //  colorWipe(255, 0, 0, 0); // Red
 //  colorWipe(0, 255, 0, 0); // Green
 //  colorWipe(0, 0, 255, 0); // Blue
@@ -260,7 +264,7 @@ void loop() {
 //  theaterChase(127,   0,   0, 0); // Red
 //  theaterChase(  0,   0, 127, 0); // Blue
   
-  rainbowCycle(1000 , 20 , 5 );
+//  rainbowCycle(1000 , 20 , 5 );
 //  detonate( 255 , 255 , 255 , 1000);
   return;
 }
