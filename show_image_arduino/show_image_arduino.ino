@@ -3,7 +3,8 @@
 #include <Adafruit_NeoPixel.h>
 #include "mapping.h"
 
-#define PIN 6
+//#define 1STHALF_PIN 6
+//#define 2NDHALF_PIN 5
 
 #define BRIGHTNESS 96
 
@@ -18,20 +19,28 @@
 //  NEO_GRB            + NEO_KHZ800);
 
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(mw*mh, 6, NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_ROWS + NEO_GRB+ NEO_KHZ800);
+Adafruit_NeoPixel firsthalfpixels = Adafruit_NeoPixel(mw*mh, 5, NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_ROWS + NEO_GRB+ NEO_KHZ800);
+Adafruit_NeoPixel secondhalfpixels = Adafruit_NeoPixel(mw*mh, 6, NEO_MATRIX_TOP + NEO_MATRIX_LEFT + NEO_MATRIX_ROWS + NEO_GRB+ NEO_KHZ800);
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   
-  pixels.begin();
-  pixels.setBrightness(100);
+  firsthalfpixels.begin();
+  secondhalfpixels.begin();
+  firsthalfpixels.setBrightness(50);
+  secondhalfpixels.setBrightness(50);
+  
 
   for(int i = 0; i < mw*mh; i++){
-    pixels.setPixelColor(i, pixels.Color(bitmap24[i][0], bitmap24[i][1], bitmap24[i][2]));
+    //Serial.println((uint16_t)pgm_read_byte(&bitmapfirsthalf[i][1]));
+    
+    firsthalfpixels.setPixelColor(i, firsthalfpixels.Color((uint16_t)pgm_read_byte(&bitmapfirsthalf[i][0]), (uint16_t)pgm_read_byte(&bitmapfirsthalf[i][1]), (uint16_t)pgm_read_byte(&bitmapfirsthalf[i][2])));
+    secondhalfpixels.setPixelColor(i, secondhalfpixels.Color((uint16_t)pgm_read_byte(&bitmapsecondhalf[i][0]), (uint16_t)pgm_read_byte(&bitmapsecondhalf[i][1]), (uint16_t)pgm_read_byte(&bitmapsecondhalf[i][2])));
   }
 
-  pixels.show();
+  firsthalfpixels.show();
+  secondhalfpixels.show();
   
   Serial.println("Done");
 
